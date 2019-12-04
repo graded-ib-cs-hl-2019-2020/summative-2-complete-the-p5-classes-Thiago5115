@@ -1,18 +1,20 @@
-
 export class Ball {
   private x: number;
   private y: number;
   private size: number;
-  private xSpeed: number = random(-3, 3);
-  private ySpeed: number = random(-3, 3);
+  private xSpeed: number = random(-4, 4);
+  private ySpeed: number = random(-4, 4);
   private stopped: boolean = false;
-  private color: string = "red";
-  private borderColor: string = "black";
+  private color: string = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";;
+  private borderColor: string = this.color;
 
-  /* TODO REQUIRED - add accessors and mutators for x, y, size, color, and borderColor */
+
+  public getX() { return this.x }
+  public setX(x: number) { this.x = x }
   constructor(x: number, y: number, size: number) {
-    /* TODO REQUIRED = Build your constructor */
-    /* TODO OPTIONAL - add optional parameters to set color and borderColor on creation of the object */
+    this.x = x;
+    this.y = y;
+    this.size = size;
   }
 
   public stop() {
@@ -33,20 +35,19 @@ export class Ball {
     if (this.stopped == false) {
       this.x = this.xSpeed + this.x;
       this.y = this.ySpeed + this.y;
-      this.doBorderBehavior();
+      this.border();
     }
   }
 
-  public distFromMouse(): number {
+  public mouse(): number {
     return dist(this.x, this.y, mouseX, mouseY);
   }
 
-  public touchingMouse(): boolean {
-    return this.distFromMouse() < this.size / 2;
+  public mouse2(): boolean {
+    return this.mouse() < this.size / 2;
   }
 
-  /* This border behavior implements a bounce */
-  private doBorderBehavior() {
+  private border() {
     if (this.x < this.size / 2) {
       this.x = this.size / 2;
       this.xSpeed = -this.xSpeed;
